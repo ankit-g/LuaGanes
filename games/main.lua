@@ -5,7 +5,7 @@ local red = {255, 0, 0, 255}
 local green = {0, 255, 0, 255}
 local blue  = {0, 0, 255, 255}
 local white = {255, 255, 255, 255}
-local dark = {100, 40, 50, 255}
+local dark =  {150, 100, 0, 255}
 --not adding white (looks ugly)
 local colors = {red, yellow, blue, green, one, two, dark}
 local tbl_clr = {}
@@ -15,8 +15,11 @@ local ball_one = Ball.new(20, 'fill')
 math.random(os.time())
 --local log = require 'log'
 --log.outfile = 'game_log.c'
+src = love.audio.newSource("redBird.mp3")
 
 function love.load(arg)
+  src:play()
+  src:setLooping(true)
 end
 
 local function draw_circle_line(x, y, line_number)
