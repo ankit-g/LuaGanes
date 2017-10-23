@@ -8,7 +8,7 @@ local action = function ()
 
 Actor.new = function ()
 	local self = setmetatable({}, Actor)
-	self.name = 'default'
+	self.name = 'master'
 	return self
 	end
 
