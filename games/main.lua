@@ -5,30 +5,33 @@ local red = {255, 0, 0, 255}
 local green = {0, 255, 0, 255}
 local blue  = {0, 0, 255, 255}
 local white = {255, 255, 255, 255}
+local dark = {100, 40, 50, 255}
 --not adding white (looks ugly)
-local colors = {red, yellow, blue, green, one, two}
+local colors = {red, yellow, blue, green, one, two, dark}
 local tbl_clr = {}
 
+local Ball = require('ball')
+local ball_one = Ball.new(20, 'fill')
+math.random(os.time())
+--local log = require 'log'
+--log.outfile = 'game_log.c'
+
 function love.load(arg)
-  for i = 1, 300 do
-    tbl_clr[i] = math.random(1, #colors)
-  end
 end
 
-local function draw_circle_line(x,y, line_number)
-    local radius = 20
-    local strokes = 100
+local function draw_circle_line(x, y, line_number)
     for i = 1, 20 do
-        love.graphics.setColor(unpack(colors[tbl_clr[i*line_number]]))
-        love.graphics.circle('fill', x, y, radius, strokes)
+        ball_one:draw(x, y, colors[math.random(1, #colors)])
         x = x + 40
     end
 end
 
 function love.draw()
-  local x, y, radius, strokes = 20, 20, 20, 100
-  for i = 1, 15 do
-    draw_circle_line(x, y, i)
-    y = y + 40
-  end
+  --log.trace('red type '..type(red))
+    x, y = 20, 20
+    for line = 1, 15 do
+        draw_circle_line(x, y, line)
+        y = y + 40
+    end
+    love.timer.sleep(1/4)
 end
