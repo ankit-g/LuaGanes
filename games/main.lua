@@ -11,30 +11,62 @@ local colors = {red, yellow, blue, green, one, two, dark}
 local tbl_clr = {}
 
 local Ball = require('ball')
-local ball_one = Ball.new(20, 'fill')
+local fixed_balls = {}
+
 math.random(os.time())
---local log = require 'log'
---log.outfile = 'game_log.c'
+local log = require 'log'
+log.outfile = 'game_log.c'
 src = love.audio.newSource("redBird.mp3")
 
+function get_ball_cordinates(x_res, y_res, radius)
+         local diameter = radius*2
+         -- no of circles in x axis
+         local num_columns = x_res / diameter
+         local num_rows = y_res / diameter
+
+         local total_circles = num_rows * num_columns
+         local x, y = radius, radius
+
+         local ball_cordinates = {}
+
+          for row = 1, num_rows do
+                  ball_cordinates[row] = {}
+                  x = radius
+                  for column = 1, num_columns do
+                          ball_cordinates[row][column] = {}
+                          ball_cordinates[row][column].x = x
+                          ball_cordinates[row][column].y = y
+                          x = x + diameter
+                  end
+                  y = y + diameter
+          end
+          return num_rows, num_columns, ball_cordinates
+end
+
 function love.load(arg)
+  local ball_radius = 3
+  local num_rows, num_columns, ball_cordinates =
+      get_ball_cordinates(love.graphics.getWidth(),love.graphics.getHeight(), ball_radius)
+
   src:play()
   src:setLooping(true)
-end
+  local count = 1
 
-local function draw_circle_line(x, y, line_number)
-    for i = 1, 20 do
-        ball_one:draw(x, y, colors[math.random(1, #colors)])
-        x = x + 40
-    end
-end
+  for row = 1, num_rows do
+          for column = 1, num_columns do
+                  fixed_balls[count] =
+                    Ball.new(ball_cordinates[row][column].x,
+                        ball_cordinates[row][column].y, ball_radius, 'fill')
+                  count = count + 1
+          end
+  end
+  log.trace(#fixed_balls)
+  end
 
 function love.draw()
-  --log.trace('red type '..type(red))
-    x, y = 20, 20
-    for line = 1, 15 do
-        draw_circle_line(x, y, line)
-        y = y + 40
-    end
-    love.timer.sleep(1/4)
+  for ball_no = 1, #fixed_balls do
+      --log.trace(ball_no)
+      fixed_balls[ball_no]:fix_draw(colors[math.random(1, #colors)])
+  end
+  love.timer.sleep(1/4)
 end
