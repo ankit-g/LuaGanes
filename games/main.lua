@@ -101,7 +101,6 @@ end
 
 function love.update(dt)
   -- body...
-
     for ball_no = 1, #fixed_balls do
       fixed_balls[ball_no]:update_radius_on_touch(love.mouse.getX(), love.mouse.getY())
   end
@@ -113,7 +112,7 @@ function love.load(arg)
   load_wild_colors()
 
   love.window.setMode(1366, 786, {resizable=true, vsync=false, minwidth=400, minheight=300})
-  local ball_radius = 4
+  local ball_radius = 20
   local num_rows, num_columns, ball_cordinates =
       get_ball_cordinates(love.graphics.getWidth(),love.graphics.getHeight(), ball_radius)
 
@@ -125,22 +124,14 @@ function love.load(arg)
           for column = 1, num_columns do
                   fixed_balls[count] =
                     Ball.new(ball_cordinates[row][column].x,
-                        ball_cordinates[row][column].y, ball_radius, 'fill')
+                        ball_cordinates[row][column].y, ball_radius, 'fill',color_wild[math.random(1, #color_wild)])
                   count = count + 1
           end
   end
 end
 
-local past_time = os.clock()
-
 function love.draw()
-  local color = color_wild[math.random(1, #color_wild)]
   for ball_no = 1, #fixed_balls do
-      --log.trace(ball_no)
-      if math.abs(os.clock()-past_time) >= 2 then
-        color = color_wild[math.random(1, #color_wild)]
-        pas_time = os.clock()
-      end
-      fixed_balls[ball_no]:fix_draw(color)
+      fixed_balls[ball_no]:fix_draw()
   end
 end
