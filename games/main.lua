@@ -10,7 +10,7 @@ local dark =  {150, 100, 0, 255}
 local colors = {red, yellow, blue, green, one, two, dark}
 local tbl_clr = {}
 
-local name = require "socket"
+local socket = require "socket"
 local utl  = require "utility"
 local Ball = require "ball"
 
