@@ -30,6 +30,11 @@ Ball.fix_draw = function (self)
   love.graphics.circle(self.mode, self.x, self.y, self.radius, 100)
 end
 
+Ball.setXY = function (self, x, y)
+  self.x = self.x + x
+  self.y = self.y + y
+end
+
 Ball.update_radius_on_touch = function(self, mouse_x, mouse_y)
     distance = utl.getDistance(self.x, self.y, mouse_x, mouse_y)
     if distance <= self.orignal_radius then
@@ -54,6 +59,14 @@ Ball.draw = function (self, x, y, color)
   --log.trace('color type '..type(color))
   love.graphics.setColor(unpack(color))
   love.graphics.circle(self.mode, x, y, self.radius, 100)
+end
+
+Ball.get_x = function (self)
+  return self.x
+end
+
+Ball.get_y = function (self)
+  return self.y
 end
 
 return Ball
