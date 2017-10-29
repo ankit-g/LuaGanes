@@ -39,7 +39,7 @@ Ball.update_radius_on_touch = function(self, mouse_x, mouse_y)
     distance = utl.getDistance(self.x, self.y, mouse_x, mouse_y)
     if distance <= self.orignal_radius then
       self.radius = self.orignal_radius + math.random(0, 5)
-      self.color  = {255, 0, 0, 255}
+      self.color  = {255, 20, 147, 255}
     elseif distance == math.random(100, 200) then
       self.color = {math.random(0, 255), math.random(0, 255),math.random(0, 255), 255}
       self.radius = self.orignal_radius - math.random(5, 10)

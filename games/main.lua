@@ -41,7 +41,7 @@ love.window.setMode(1366, 786, {resizable=true, vsync=false, minwidth=400, minhe
 local SCREEN_HEIGHT = love.graphics.getHeight()
 local SCREEN_WIDTH  = love.graphics.getWidth()
 
-speed = 100
+speed = 300
 function love.update(dt)
   -- body...
     for ball_no = 1, #fixed_balls do
