@@ -4,6 +4,16 @@ function utility.getDistance(x1, y1, x2, y2)
         return math.ceil(math.sqrt((x1-x2)^2 + (y1-y2)^2))
 end
 
+function utility.exe_times(func, times)
+       local times = times
+       local once = 0
+
+        return function(...)
+                if once == times then return end
+                func(unpack({...}))
+                once = once + 1
+        end
+end
 
 function utility.get_ball_cordinates(x_res, y_res, radius)
          local diameter = radius*2
