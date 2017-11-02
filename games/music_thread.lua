@@ -1,13 +1,17 @@
 local utl = require 'utility'
-require 'socket'
-
 local log = require'log'
 local clock = os.clock
-
+require "love.filesystem"
+require "love.image"
+require "love.audio"
+require "love.sound"
+require "luafft"
+require "socket"
+complex = require "complex"
 log.outfile = 'thread_log.c'
 
 local Size = 1024 --The amount of frequencies to obtain as result of the FFT process.
-local Frequency = 14100 --The sampling rate of the song, in Hz
+local Frequency = 4100 --The sampling rate of the song, in Hz
 local length = Size / Frequency -- The size of each frequency range of the final generated FFT values.
 
 -- This function multiplies every value in the
@@ -22,14 +26,13 @@ channel 		= {};
 channel.sound_data	= love.thread.getChannel ( "sound_data" );
 channel.spectrum  	= love.thread.getChannel ( "spectrum" );
 
+
 start_analysis = false
 local function play_song(SoundData)
-    utility_log('this is '..tostring(finishedLoading))
-
-    local Music = love.audio.newSource(SoundData)
+--    SoundData = love.sound.newSoundData('redBird.mp3')
+    SoundData = SoundData
+    Music = love.audio.newSource(SoundData)
     Music:play()
-
-    start_analysis = true
     return Music
 end
 
@@ -51,20 +54,22 @@ function get_spectrum(Music)
     end
 
     spectrum = fft(List, false) 
-    multiply(spectrum, 100)
-
+    multiply(spectrum, 10)
+--	assert(type(spectrum) ~= 'table')
     return spectrum
 end
 
 while true do
-		assert(1==0)
 	if channel.sound_data:getCount() == 1 then
 		start_analysis = false
-		music = play_song(channel.sound_data:pop())	
+		SoundData = channel.sound_data:pop()
+		music = play_song(SoundData)	
+    		start_analysis = true
 	end
-
 	if true == start_analysis and
 		channel.sound_data:getCount() == 0 then
-		channel.spectrum:push(get_spectrum(music))
+		spec = get_spectrum(music)
+		channel.spectrum:push(spec)
+		socket.sleep(0.002)
 	end
 end
