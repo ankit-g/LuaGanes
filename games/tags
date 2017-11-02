@@ -1,0 +1,125 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+) love.handlers[name]	lovedebug.lua	/^					xpcall(function() love.handlers[name](a,b,c,d,e,f) end, _Debug.handleError)$/;"	f
+) love.update	lovedebug.lua	/^				xpcall(function() love.update(dt) end, _Debug.handleError)$/;"	f
+) love.update	lovedebug.lua	/^                xpcall(function() love.update(dt) end, _Debug.handleError)$/;"	f
+Ball.draw 	ball.lua	/^Ball.draw = function (self, x, y, color)$/;"	f
+Ball.fix_draw 	ball.lua	/^Ball.fix_draw = function (self)$/;"	f
+Ball.get_x 	ball.lua	/^Ball.get_x = function (self)$/;"	f
+Ball.get_y 	ball.lua	/^Ball.get_y = function (self)$/;"	f
+Ball.new 	ball.lua	/^Ball.new = function (x, y, radius, mode, color)$/;"	f
+Ball.setXY 	ball.lua	/^Ball.setXY = function (self, x, y)$/;"	f
+Ball.update_radius_on_touch 	ball.lua	/^Ball.update_radius_on_touch = function(self, mouse_x, mouse_y)$/;"	f
+Coordinates.getXY	coordinates.lua	/^function Coordinates.getXY()$/;"	f
+Coordinates.set_res	coordinates.lua	/^function Coordinates.set_res(width, height)$/;"	f
+Coordinates.update	coordinates.lua	/^function Coordinates.update()$/;"	f
+_Debug.checkChars 	lovedebug.lua	/^_Debug.checkChars = function(str, chars)$/;"	f
+_Debug.findLocation 	lovedebug.lua	/^_Debug.findLocation = function(str)$/;"	f
+_Debug.handleError 	lovedebug.lua	/^_Debug.handleError = function(err)$/;"	f
+_Debug.handleKey 	lovedebug.lua	/^_Debug.handleKey = function(a)$/;"	f
+_Debug.handleMouse 	lovedebug.lua	/^_Debug.handleMouse = function(a, b, c)$/;"	f
+_Debug.handlePast 	lovedebug.lua	/^_Debug.handlePast = function(add)$/;"	f
+_Debug.handleVirtualKey 	lovedebug.lua	/^_Debug.handleVirtualKey = function(a)$/;"	f
+_Debug.hotSwapDraw 	lovedebug.lua	/^_Debug.hotSwapDraw = function()$/;"	f
+_Debug.hotSwapLoad 	lovedebug.lua	/^_Debug.hotSwapLoad = function()$/;"	f
+_Debug.hotSwapUpdate 	lovedebug.lua	/^_Debug.hotSwapUpdate = function(dt,file)$/;"	f
+_Debug.keyConvert 	lovedebug.lua	/^_Debug.keyConvert = function(key)$/;"	f
+_Debug.lineInfo 	lovedebug.lua	/^_Debug.lineInfo = function(str)$/;"	f
+_Debug.liveCheckLastModified 	lovedebug.lua	/^_Debug.liveCheckLastModified = function(table1,table2)$/;"	f
+_Debug.onTop 	lovedebug.lua	/^_Debug.onTop = function()$/;"	f
+_Debug.onTopUpdate 	lovedebug.lua	/^_Debug.onTopUpdate = function(dt)$/;"	f
+_Debug.overlay 	lovedebug.lua	/^_Debug.overlay = function()$/;"	f
+_Debug.updateProposals 	lovedebug.lua	/^_Debug.updateProposals = function(Table)$/;"	f
+_DebugSettings.Settings 	lovedebug.lua	/^_DebugSettings.Settings = function()$/;"	f
+_G["love"].run 	lovedebug.lua	/^_G["love"].run = function()$/;"	f
+_G["print"] 	lovedebug.lua	/^_G["print"] = function(...)$/;"	f
+butterfly2	luafft.lua	/^function butterfly2(input,out_index,fstride, twiddles, m, inverse)$/;"	f
+butterfly3	luafft.lua	/^function butterfly3(input,out_index, fstride, twiddles, m, inverse)$/;"	f
+butterfly4	luafft.lua	/^function butterfly4(input,out_index, fstride, twiddles, m, inverse)$/;"	f
+butterfly5	luafft.lua	/^function butterfly5(input,out_index, fstride, twiddles, m, inverse)$/;"	f
+butterfly_generic	luafft.lua	/^function butterfly_generic(input,out_index, fstride, twiddles, m, p, inverse )$/;"	f
+calculate_factors	luafft.lua	/^function calculate_factors(num_points)$/;"	f
+callbacks.allLoaded 	love-loader.lua	/^    callbacks.allLoaded = allLoadedCallback or function() end$/;"	f
+callbacks.oneLoaded 	love-loader.lua	/^    callbacks.oneLoaded = oneLoadedCallback or function() end$/;"	f
+complex.abs	complex.lua	/^function complex.abs( cx )$/;"	f
+complex.add	complex.lua	/^function complex.add( cx1,cx2 )$/;"	f
+complex.conjugate	complex.lua	/^function complex.conjugate( cx )$/;"	f
+complex.convpolar	complex.lua	/^function complex.convpolar( radius, phi )$/;"	f
+complex.convpolardeg	complex.lua	/^function complex.convpolardeg( radius, phi )$/;"	f
+complex.copy	complex.lua	/^function complex.copy( cx )$/;"	f
+complex.div	complex.lua	/^function complex.div( cx1,cx2 )$/;"	f
+complex.divnum	complex.lua	/^function complex.divnum( cx,num )$/;"	f
+complex.exp	complex.lua	/^function complex.exp( cx )$/;"	f
+complex.get	complex.lua	/^function complex.get( cx )$/;"	f
+complex.is	complex.lua	/^function complex.is( cx,real,imag )$/;"	f
+complex.ln	complex.lua	/^function complex.ln( cx )$/;"	f
+complex.mul	complex.lua	/^function complex.mul( cx1,cx2 )$/;"	f
+complex.mulconjugate	complex.lua	/^function complex.mulconjugate( cx )$/;"	f
+complex.mulnum	complex.lua	/^function complex.mulnum( cx,num )$/;"	f
+complex.new	complex.lua	/^function complex.new( ... )$/;"	f
+complex.polar	complex.lua	/^function complex.polar( cx )$/;"	f
+complex.polardeg	complex.lua	/^function complex.polardeg( cx )$/;"	f
+complex.pow	complex.lua	/^function complex.pow( cx,num )$/;"	f
+complex.print	complex.lua	/^function complex.print( ... )$/;"	f
+complex.round	complex.lua	/^function complex.round( cx,idp )$/;"	f
+complex.set	complex.lua	/^function complex.set( cx,real,imag )$/;"	f
+complex.sqrt	complex.lua	/^function complex.sqrt( cx )$/;"	f
+complex.sub	complex.lua	/^function complex.sub( cx1,cx2 )$/;"	f
+complex.to	complex.lua	/^function complex.to( num )$/;"	f
+complex.tostring	complex.lua	/^function complex.tostring( cx,formatstr )$/;"	f
+complex.type	complex.lua	/^function complex.type( arg )$/;"	f
+complex_meta.__add 	complex.lua	/^complex_meta.__add = function( cx1,cx2 )$/;"	f
+complex_meta.__call 	complex.lua	/^complex_meta.__call = function( ... )$/;"	f
+complex_meta.__concat 	complex.lua	/^complex_meta.__concat = function( cx,cx2 )$/;"	f
+complex_meta.__div 	complex.lua	/^complex_meta.__div = function( cx1,cx2 )$/;"	f
+complex_meta.__eq 	complex.lua	/^complex_meta.__eq = function( cx1,cx2 )$/;"	f
+complex_meta.__mul 	complex.lua	/^complex_meta.__mul = function( cx1,cx2 )$/;"	f
+complex_meta.__pow 	complex.lua	/^complex_meta.__pow = function( cx,num )$/;"	f
+complex_meta.__sub 	complex.lua	/^complex_meta.__sub = function( cx1,cx2 )$/;"	f
+complex_meta.__tostring 	complex.lua	/^complex_meta.__tostring = function( cx )$/;"	f
+complex_meta.__unm 	complex.lua	/^complex_meta.__unm = function( cx )$/;"	f
+constructor 	love-loader.lua	/^    constructor = function(path)$/;"	f
+draw_graphics	main.lua	/^function draw_graphics()$/;"	f
+endThreadIfAllLoaded	love-loader.lua	/^  local function endThreadIfAllLoaded()$/;"	f
+fft	luafft.lua	/^function fft(input, inverse)$/;"	f
+fftr	luafft.lua	/^function fftr(input, inverse)$/;"	f
+getDistance	ball.lua	/^function getDistance(x1, y1, x2, y2)$/;"	f
+getResourceFromThreadIfAvailable	love-loader.lua	/^  local function getResourceFromThreadIfAvailable()$/;"	f
+is_updated	coordinates.lua	/^function is_updated() return updated end$/;"	f
+loader.newFont	love-loader.lua	/^  function loader.newFont(holder, key, path, size)$/;"	f
+loader.newImage	love-loader.lua	/^  function loader.newImage(holder, key, path)$/;"	f
+loader.newImageData	love-loader.lua	/^  function loader.newImageData(holder, key, path)$/;"	f
+loader.newSoundData	love-loader.lua	/^  function loader.newSoundData(holder, key, pathOrDecoder)$/;"	f
+loader.newSource	love-loader.lua	/^  function loader.newSource(holder, key, path, sourceType)$/;"	f
+loader.start	love-loader.lua	/^  function loader.start(allLoadedCallback, oneLoadedCallback)$/;"	f
+loader.start(function() finishedLoading 	main.lua	/^  loader.start(function() finishedLoading = true end)$/;"	f
+loader.update	love-loader.lua	/^  function loader.update()$/;"	f
+local _retminusone 	complex.lua	/^local _retminusone = function() return -1 end$/;"	f
+local _retone 	complex.lua	/^local _retone = function() return 1 end$/;"	f
+local round 	log.lua	/^local round = function(x, increment)$/;"	f
+local tostring 	log.lua	/^local tostring = function(...)$/;"	f
+log[x.name] 	log.lua	/^  log[x.name] = function(...)$/;"	f
+love.conf	conf.lua	/^function love.conf(t)$/;"	f
+love.draw	main.lua	/^function love.draw()$/;"	f
+love.load	main.lua	/^function love.load()$/;"	f
+love.update	main.lua	/^function love.update(dt)$/;"	f
+msg	luafft.lua	/^function msg(...)$/;"	f
+mutiply	main.lua	/^function mutiply(list, factor)$/;"	f
+newResource	love-loader.lua	/^  local function newResource(kind, holder, key, ...)$/;"	f
+next_possible_size	luafft.lua	/^function next_possible_size(n)$/;"	f
+play_song	main.lua	/^local function play_song()$/;"	f
+postProcess 	love-loader.lua	/^    postProcess = function(data)$/;"	f
+postProcess 	love-loader.lua	/^    postProcess = function(data, resource)$/;"	f
+print_list	luafft.lua	/^function print_list(list)$/;"	f
+requestNewResourceToThread	love-loader.lua	/^  local function requestNewResourceToThread()$/;"	f
+setmetatable( complex, { __call 	complex.lua	/^setmetatable( complex, { __call = function( _,num ) return complex.to( num ) end } )$/;"	f
+shift	love-loader.lua	/^  local function shift(t)$/;"	f
+sleep	thread.lua	/^function sleep(n)  -- seconds$/;"	f
+utility.exe_times	utility.lua	/^function utility.exe_times(func, times)$/;"	f
+utility.getDistance	utility.lua	/^function utility.getDistance(x1, y1, x2, y2)$/;"	f
+utility.get_ball_cordinates	utility.lua	/^function utility.get_ball_cordinates(x_res, y_res, radius)$/;"	f
+work	luafft.lua	/^function work(input, output, out_index, f, factors, factors_index, twiddles, fstride, in_stride, inverse)$/;"	f
