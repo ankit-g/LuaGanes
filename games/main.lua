@@ -79,29 +79,28 @@ function draw_graphics()
   --[[In case you want to show only a part of the list,
       you can use #spec/(amount of bars). Setting 
       this to 1 will render all bars processed.]]
-      mid_table = {}
+    local mid_table = {}
+    local bass_table = {}
     for i = 1, #spectrum/8 do
-	       love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
-      --iterate over the list, and draws a rectangle for each band value.
-       --if math.floor((i)/length) < 50 --[[or math.floor((i)/length) > 200]] then break end
-	       --if math.floor((i)/length) < 1500 or math.floor((i)/length) > 2000 then --[[freq_log(tostring(math.floor((i)/length))) assert(1==0)]] else
-	       if math.floor((i)/length) < 230 or math.floor((i)/length) > 270 then --[[freq_log(tostring(math.floor((i)/length))) assert(1==0)]] else
-		--freq_log(tostring(math.floor((i)/length))) 
-	       love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
-	--      freq_log('this '..tostring(-1*math.floor((complex.abs(spectrum[i])*0.7))))
+	    	local freq = math.floor((i)/length)
+	       --love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
+	      if freq > 230 and freq < 270 then
+	--      love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
 	--	love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
-	      	mid_table[math.floor((i)/length)] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
-	      --prints the frequency and it's current value on the screen.
-	      --love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
-	      --freq_log("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
-	      --Current position being analyzed.
-	      --love.graphics.print(CopyPos, 0, 0)
-	      --Current size of song in samples.
-	      --love.graphics.print(SoundData:getSampleCount(), 0, 20) 
+	      	mid_table[freq] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
 	      end
-      end
+
+	      if freq > 5 and freq < 55 then
+	--	love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
+	--	love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
+	      	bass_table[freq] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
+	      end
+
+
+    end
 
       love.graphics.rectangle("fill", 100, ScreenSizeH, 7, get_sound_avg(mid_table)*5) 
+      love.graphics.rectangle("fill", 150, ScreenSizeH, 7, get_sound_avg(bass_table)) 
 --      freq_log(tostring('dude '..value))]]
       UpdateSpectrum = false
   end
