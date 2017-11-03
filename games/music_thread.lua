@@ -69,7 +69,6 @@ while true do
 	if true == start_analysis and
 		channel.sound_data:getCount() == 0 then
 		spec = get_spectrum(music)
-		channel.spectrum:push(spec)
-		socket.sleep(0.002)
+		channel.spectrum:supply(spec)
 	end
 end

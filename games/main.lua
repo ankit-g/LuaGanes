@@ -25,7 +25,7 @@ local sounds = {}
 
 function love.load()
 
-  Size = 512*2 --The amount of frequencies to obtain as result of the FFT process.
+  Size = 1024 --The amount of frequencies to obtain as result of the FFT process.
   Frequency = 4100 --The sampling rate of the song, in Hz
   length = Size / Frequency -- The size of each frequency range of the final generated FFT values.
 
@@ -63,22 +63,47 @@ function love.update(dt)
     end
 end
 
+function get_sound_avg(sound_table)
+      value = 0
+      len = 0
+      for _, v in pairs(sound_table) do
+	value = value + v
+	len = len + 1 
+      end
+      return (value / len)
+end
+
+freq_log = utl.exe_times(log.trace, 1000)
 function draw_graphics()
   if UpdateSpectrum then
   --[[In case you want to show only a part of the list,
       you can use #spec/(amount of bars). Setting 
       this to 1 will render all bars processed.]]
+      mid_table = {}
     for i = 1, #spectrum/8 do
+	       love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
       --iterate over the list, and draws a rectangle for each band value.
-      love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*(complex.abs(spectrum[i])*0.7))       
-      --prints the frequency and it's current value on the screen.
-     -- love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
-      --Current position being analyzed.
-      --love.graphics.print(CopyPos, 0, 0)
-      --Current size of song in samples.
-      --love.graphics.print(SoundData:getSampleCount(), 0, 20) 
+       --if math.floor((i)/length) < 50 --[[or math.floor((i)/length) > 200]] then break end
+	       --if math.floor((i)/length) < 1500 or math.floor((i)/length) > 2000 then --[[freq_log(tostring(math.floor((i)/length))) assert(1==0)]] else
+	       if math.floor((i)/length) < 230 or math.floor((i)/length) > 270 then --[[freq_log(tostring(math.floor((i)/length))) assert(1==0)]] else
+		--freq_log(tostring(math.floor((i)/length))) 
+	       love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
+	--      freq_log('this '..tostring(-1*math.floor((complex.abs(spectrum[i])*0.7))))
+	--	love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
+	      	mid_table[math.floor((i)/length)] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
+	      --prints the frequency and it's current value on the screen.
+	      --love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
+	      --freq_log("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
+	      --Current position being analyzed.
+	      --love.graphics.print(CopyPos, 0, 0)
+	      --Current size of song in samples.
+	      --love.graphics.print(SoundData:getSampleCount(), 0, 20) 
+	      end
       end
-    UpdateSpectrum = false
+
+      love.graphics.rectangle("fill", 100, ScreenSizeH, 7, get_sound_avg(mid_table)*5) 
+--      freq_log(tostring('dude '..value))]]
+      UpdateSpectrum = false
   end
 end
 

@@ -1,3 +1,0 @@
-[TRACE 11/03/17 00:34:08] main.lua:46: false music_thread.lua:69: attempt to call global 'sleep' (a nil value)
-[TRACE 11/03/17 00:49:24] main.lua:46: false music_thread.lua:45: attempt to index local 'Music' (a nil value)
-[TRACE 11/03/17 00:50:11] main.lua:46: false music_thread.lua:70: 'then' expected near '='
