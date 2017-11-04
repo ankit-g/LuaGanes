@@ -4,12 +4,40 @@ local log = require 'log'
 local utl = require('utility')
 abs = math.abs
 require "complex"
+
+local Speaker = {}
+Speaker.__index = Speaker
+
+Speaker.new = function(base_x, base_y)
+	self = setmetatable({}, Speaker)
+	self.base_x, self.base_y = base_x, base_y
+	return self
+end
+
+Speaker.draw = function(self)
+	speaker_x, speaker_y = self.base_x, self.base_y
+        love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.rectangle("line", speaker_x-138, speaker_y-200, 300, 600 )
+end
+
+Speaker.play = function(self, mid, bass)
+	speaker_x, speaker_y = self.base_x, self.base_y
+	love.graphics.setColor(0, 0, 255, 255)
+	love.graphics.circle('line', speaker_x, speaker_y, (((-1*bass)/1)/1), 100)
+	love.graphics.setColor(255, 0, 255, 255)
+	love.graphics.circle('fill', speaker_x, speaker_y, (((-1*bass)/5)/1), 100)
+	love.graphics.setColor(255, 0, 0, 255)
+
+	love.graphics.circle('line', speaker_x, speaker_y + 300, (((-1*mid)*5)/1), 100)
+	love.graphics.setColor(0, 0, 255, 255)
+	love.graphics.circle('fill', speaker_x, speaker_y + 300, (((-1*mid))/1), 100)
+end
+
 --complex.new --required for using the FFT function.
 UpdateSpectrum = false
 
 log.outfile = 'visuals.log'
 
-Song = "redBird.mp3" 
 local finishedLoading = false
 
 -- thread
@@ -25,14 +53,19 @@ local sounds = {}
 
 function love.load()
 
+
   Size = 1024 --The amount of frequencies to obtain as result of the FFT process.
   Frequency = 4100 --The sampling rate of the song, in Hz
   length = Size / Frequency -- The size of each frequency range of the final generated FFT values.
 
   ScreenSizeW = love.graphics.getWidth() --gets screen dimensions.
   ScreenSizeH = love.graphics.getHeight() --gets screen dimensions.
-  loader.newSoundData( sounds, 'music', 'redBird.mp3')
-  loader.newImage(  images, 'rabbit', 'rabbit.PNG')
+  speaker_left = Speaker.new(ScreenSizeW/2-300, ScreenSizeH/2-100)
+  speaker_right = Speaker.new(ScreenSizeW/2+300, ScreenSizeH/2-100)
+
+  loader.newSoundData( sounds, 'music', 'shiva.mp3')
+  loader.newImage(  images, 'rabbit', 'sign.PNG')
+--  loader.newImage(  images, 'loading', 'loading.PNG')
   loader.start(function() finishedLoading = true end)
 end
 
@@ -53,70 +86,43 @@ function love.update(dt)
 
    if true == finishedLoading then
 	  send_sound_data()
-    --send sound data here so that the thread can start playing it.
-    	if channel.spectrum:getCount() >= 1 and UpdateSpectrum  == false then
-    		spectrum = channel.spectrum:pop()
-
-	    	--Tells the draw function it already has data to draw
-    		UpdateSpectrum = true
-    	end
     end
-end
-
-function get_sound_avg(sound_table)
-      value = 0
-      len = 0
-      for _, v in pairs(sound_table) do
-	value = value + v
-	len = len + 1 
-      end
-      return (value / len)
 end
 
 freq_log = utl.exe_times(log.trace, 1000)
 function draw_graphics()
-  if UpdateSpectrum then
-  --[[In case you want to show only a part of the list,
-      you can use #spec/(amount of bars). Setting 
-      this to 1 will render all bars processed.]]
-    local mid_table = {}
-    local bass_table = {}
-    for i = 1, #spectrum/8 do
-	    	local freq = math.floor((i)/length)
-	       --love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
-	      if freq > 230 and freq < 270 then
-	--      love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
-	--	love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
-	      	mid_table[freq] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
-	      end
-
-	      if freq > 5 and freq < 55 then
-	--	love.graphics.rectangle("line", i*7, ScreenSizeH, 7, -1*math.floor((complex.abs(spectrum[i])*0.7)))
-	--	love.graphics.print("@ "..math.floor((i)/length).."Hz "..math.floor(complex.abs(spectrum[i])*0.7), ScreenSizeW-90,(12*i)) 
-	      	bass_table[freq] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
-	      end
-
-
-    end
-
-      love.graphics.rectangle("fill", 100, ScreenSizeH, 7, get_sound_avg(mid_table)*5) 
-      love.graphics.rectangle("fill", 150, ScreenSizeH, 7, get_sound_avg(bass_table)) 
---      freq_log(tostring('dude '..value))]]
-      UpdateSpectrum = false
-  end
+      if channel.spectrum:getCount() >=  1 then
+      	spec = channel.spectrum:pop()
+      end
+      if spec then
+        love.graphics.setColor(255, 255, 255, 255)
+      	love.graphics.rectangle("fill", 100, ScreenSizeH, 7,spec.mid_left*5)
+      	love.graphics.rectangle("fill", 150, ScreenSizeH, 7,spec.bass_left*1)
+        speaker_left:play(spec.mid_left, spec.bass_left)
+        speaker_right:play(spec.mid_right, spec.bass_right)
+      end
 end
 
 function love.draw()
   if finishedLoading  then
+    --Drawing stuff reset colors
+    love.graphics.setColor(255,255,255)
+--    love.graphics.draw(images.loading, 0, 0)
+    speaker_left:draw()
+    speaker_right:draw()
   -- media contains the images and sounds. You can use them here safely now.
+   -- love.graphics.circle('line', 200, 200, 50, 100)
     draw_graphics()
-    love.graphics.draw(images.rabbit, 172, 172)
-    love.graphics.circle('line', 200, 200, 50, 100)
-  else -- not finishedLoading
-    love.graphics.circle('fill', 200, 200, 50, 100)
+    love.graphics.setColor(255, 0, 0, 255)
+    --Drawing stuff reset colors
+    love.graphics.setColor(255,255,255)
+    love.graphics.draw(images.rabbit, ScreenSizeW-100, ScreenSizeH-79)
+  else
+    -- not finishedLoading
+   -- love.graphics.circle('fill', 200, 200, 50, 100)
     local percent = 0
-    if loader.resourceCount ~= 0 then 
-	    percent = loader.loadedCount / loader.resourceCount 
+    if loader.resourceCount ~= 0 then
+	    percent = loader.loadedCount / loader.resourceCount
     end
     love.graphics.print(("Loading .. %d%%"):format(percent*100), 100, 100)
   end

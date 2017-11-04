@@ -36,6 +36,36 @@ local function play_song(SoundData)
     return Music
 end
 
+function get_sound_avg(sound_table)
+      value = 0
+      len = 0
+      for _, v in pairs(sound_table) do
+	value = value + v
+	len = len + 1 
+      end
+      return (value / len)
+end
+
+function get_mid_and_bass(channel_freq_table)
+    local mid_table = {}
+    local bass_table = {}
+
+    spectrum = fft(channel_freq_table, false) 
+    multiply(spectrum, 10)
+    
+    for i = 1, #spectrum/8 do
+	      local freq = math.floor((i)/length)
+	      if freq > 230 and freq < 270 then
+	      	mid_table[freq] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
+	      end
+
+	      if freq > 5 and freq < 50 then
+	      	bass_table[freq] = -1*math.floor((complex.abs(spectrum[i])*0.7)) 
+	      end
+    end
+
+    return get_sound_avg(mid_table), get_sound_avg(bass_table)
+end
 --An FFT converts audio from a time
 --space to a frequency space,
 --so you can analyze the volume level in 
@@ -44,19 +74,22 @@ end
 function get_spectrum(Music)
     local MusicPos = Music:tell( "samples" ) 
     local MusicSize = SoundData:getSampleCount() 
+    local ListLeft = {}
+    local ListRight = {}
+    local spec = {}
+
     if MusicPos >= MusicSize - 1536 then love.audio.rewind(Music) end 
-    local List = {}
 
     for i = MusicPos, MusicPos + (Size-1) do
-       CopyPos = i
        if i + 2048 > MusicSize then i = MusicSize/2 end 
-       List[#List+1] = complex.new(SoundData:getSample(i*2), 0) 
+       ListLeft[#ListLeft+1] = complex.new(SoundData:getSample(i*2+1), 0) 
+       ListRight[#ListRight+1] = complex.new(SoundData:getSample(i*2), 0) 
     end
 
-    spectrum = fft(List, false) 
-    multiply(spectrum, 10)
---	assert(type(spectrum) ~= 'table')
-    return spectrum
+    spec.mid_left, spec.bass_left = get_mid_and_bass(ListLeft) 
+    spec.mid_right, spec.bass_right = get_mid_and_bass(ListRight) 
+
+    return spec
 end
 
 while true do
