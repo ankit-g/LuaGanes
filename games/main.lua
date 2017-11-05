@@ -23,14 +23,14 @@ end
 Speaker.play = function(self, mid, bass)
 	speaker_x, speaker_y = self.base_x, self.base_y
 	love.graphics.setColor(0, 0, 255, 255)
-	love.graphics.circle('line', speaker_x, speaker_y, (((-1*bass)/1)/1), 100)
+	love.graphics.circle('line', speaker_x, speaker_y - 50, (((-1*bass)/1)/1), 100)
 	love.graphics.setColor(255, 0, 255, 255)
-	love.graphics.circle('fill', speaker_x, speaker_y, (((-1*bass)/5)/1), 100)
+	love.graphics.circle('fill', speaker_x, speaker_y - 50, (((-1*bass)/5)/1), 100)
 	love.graphics.setColor(255, 0, 0, 255)
 
-	love.graphics.circle('line', speaker_x, speaker_y + 300, (((-1*mid)*5)/1), 100)
+	love.graphics.circle('line', speaker_x, speaker_y + 250, (((-1*mid)*5)/1), 100)
 	love.graphics.setColor(0, 0, 255, 255)
-	love.graphics.circle('fill', speaker_x, speaker_y + 300, (((-1*mid))/1), 100)
+	love.graphics.circle('fill', speaker_x, speaker_y + 250, (((-1*mid))/1), 100)
 end
 
 --complex.new --required for using the FFT function.
@@ -63,7 +63,8 @@ function love.load()
   speaker_left = Speaker.new(ScreenSizeW/2-300, ScreenSizeH/2-100)
   speaker_right = Speaker.new(ScreenSizeW/2+300, ScreenSizeH/2-100)
 
-  loader.newSoundData( sounds, 'music', 'shiva.mp3')
+  loader.newSoundData( sounds, 'music', 'irrigate.mp3')
+  loader.newSoundData( sounds, 'next', 'hourGlass.mp3')
   loader.newImage(  images, 'rabbit', 'sign.PNG')
 --  loader.newImage(  images, 'loading', 'loading.PNG')
   loader.start(function() finishedLoading = true end)
@@ -95,10 +96,18 @@ function draw_graphics()
       	spec = channel.spectrum:pop()
       end
       if spec then
+	if spec.mid_left == 'next' then
+		channel.sound_data:push(sounds.next)
+		spec.mid_left, spec.bass_left = -1 , -1
+		spec.mid_right, spec.bass_right = -1, -1
+	return 
+	end
         love.graphics.setColor(255, 255, 255, 255)
       	love.graphics.rectangle("fill", 100, ScreenSizeH, 7,spec.mid_left*5)
       	love.graphics.rectangle("fill", 150, ScreenSizeH, 7,spec.bass_left*1)
-        speaker_left:play(spec.mid_left, spec.bass_left)
+        speaker_left:draw()
+        speaker_right:draw()
+        speaker_left:play (spec.mid_left, spec.bass_left)
         speaker_right:play(spec.mid_right, spec.bass_right)
       end
 end
@@ -107,11 +116,9 @@ function love.draw()
   if finishedLoading  then
     --Drawing stuff reset colors
     love.graphics.setColor(255,255,255)
---    love.graphics.draw(images.loading, 0, 0)
-    speaker_left:draw()
-    speaker_right:draw()
-  -- media contains the images and sounds. You can use them here safely now.
-   -- love.graphics.circle('line', 200, 200, 50, 100)
+    -- love.graphics.draw(images.loading, 0, 0)
+    -- media contains the images and sounds. You can use them here safely now.
+    -- love.graphics.circle('line', 200, 200, 50, 100)
     draw_graphics()
     love.graphics.setColor(255, 0, 0, 255)
     --Drawing stuff reset colors
@@ -119,7 +126,7 @@ function love.draw()
     love.graphics.draw(images.rabbit, ScreenSizeW-100, ScreenSizeH-79)
   else
     -- not finishedLoading
-   -- love.graphics.circle('fill', 200, 200, 50, 100)
+    -- love.graphics.circle('fill', 200, 200, 50, 100)
     local percent = 0
     if loader.resourceCount ~= 0 then
 	    percent = loader.loadedCount / loader.resourceCount

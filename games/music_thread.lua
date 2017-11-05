@@ -78,7 +78,14 @@ function get_spectrum(Music)
     local ListRight = {}
     local spec = {}
 
-    if MusicPos >= MusicSize - 1536 then love.audio.rewind(Music) end 
+    if Music:isStopped() == true then
+    	spec.mid_left, spec.bass_left = 'next', -1
+    	spec.mid_right, spec.bass_right = -1, -1 
+	start_analysis = false
+	return spec	    
+    end
+
+--    if MusicPos >= MusicSize - 1536 then love.audio.rewind(Music) end 
 
     for i = MusicPos, MusicPos + (Size-1) do
        if i + 2048 > MusicSize then i = MusicSize/2 end 
@@ -92,11 +99,14 @@ function get_spectrum(Music)
     return spec
 end
 
+count = 0
 while true do
 	if channel.sound_data:getCount() == 1 then
+		count = count + 1
+		--if count == 2 then assert(1 == 0) end
 		start_analysis = false
 		SoundData = channel.sound_data:pop()
-		music = play_song(SoundData)	
+		music = play_song(SoundData)
     		start_analysis = true
 	end
 	if true == start_analysis and
