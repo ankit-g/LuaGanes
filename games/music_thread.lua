@@ -33,6 +33,8 @@ local function play_song(SoundData)
     SoundData = SoundData
     Music = love.audio.newSource(SoundData)
     Music:play()
+-- muted the volume for now
+    Music:setVolume(0.5)
     return Music
 end
 
