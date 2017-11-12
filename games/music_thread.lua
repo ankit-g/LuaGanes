@@ -32,6 +32,8 @@ local function play_song(SoundData)
 --    SoundData = love.sound.newSoundData('redBird.mp3')
     SoundData = SoundData
     Music = love.audio.newSource(SoundData)
+-- muted the volume for now
+    Music:setVolume(0)
     Music:play()
     return Music
 end
